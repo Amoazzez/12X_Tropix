@@ -105,6 +105,12 @@ bool shooterToggle = false;
  bool toggleD = true;
  bool toggleB = false;
  bool toggleLock = false;
+ bool bR2 = master.get_digital(DIGITAL_R2);
+ bool togR2 = false;
+ bool bRIGHT = master.get_digital(DIGITAL_RIGHT);
+ bool togRIGHT = false;
+ bool bUP = master.get_digital(DIGITAL_UP);
+ bool togUP = false;
 
 void resetsensor(){
    rotation_sensor.reset_position();
@@ -185,18 +191,20 @@ if(master.get_digital(DIGITAL_L2)){
         pros::Task::delay(20);
     }
 
-    if (master.get_digital(DIGITAL_R2)) {
+
+    if (bR2) {
 
             lWing.set_value(true);
             rWing.set_value(true);
             lInt.set_value(false);
             rInt.set_value(false);
+
         } 
-        else if (toggleB){
+        else if (bUP){ //button up
             lInt.set_value(false);
             rInt.set_value(false);
         }
-         else if (master.get_digital(DIGITAL_RIGHT)){
+         else if (bRIGHT){
             lWing.set_value(true);
             rWing.set_value(true);
          }
@@ -205,7 +213,9 @@ if(master.get_digital(DIGITAL_L2)){
             rWing.set_value(false);
             lInt.set_value(true);
             rInt.set_value(true);
+            
         }
+
 if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
   shooterToggle = true;
   shootmotor.move_velocity(-100);
@@ -265,7 +275,7 @@ if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
     leftTop.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     rightTop.move_voltage(0); // 8 volts
     leftTop.move_voltage(0); // 8 volts
-     pto.set_value(false);
+    pto.set_value(false);
     rGLock.set_value(false);
     lGLock.set_value(false);
     pros::Task::delay(200);
